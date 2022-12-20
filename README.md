@@ -50,6 +50,52 @@
     2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv 두가지 데이터를 합쳐 여러가지 플롯 그리기
 
 ## 실습 진행 과정
-1. 워드클라우드
-2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv에서 성폭력만 같이 가져와서(두가지 데이터 합치기) 여러 그래프 그리기(연도별 전자감독 대상자 중, 재범한 비율을 한 눈에 볼 수 있는 그런 그래프) -> 연도, 성폭력 전자발찌 착용자 수, 재범 수
-    - 2019년 데이터는 제외
+### 1. 워드클라우드
+크롤링한 데이터(SBS_data_3_.json / DongA_data_3_.json) 중, 뉴스 기사별 중요도 상위 10개 단어를 추출한 데이터를 활용하여 워드클라우드 제작을 진행하였다. 이에 관한 코드는 keyword_wordcloud.py 에 포함되어 있다.
+
+1. 기사별 중요도 상위 10개 데이터가 있는 json 데이터를 입력받아 뉴스 별 키워드를 카운트하여 딕셔너리 변수로 반환하는 함수를 구현했다. (라이브러리 임포트 코드 생략)
+    ```
+    ## 언론사(SBS, 동아일보) 별 뉴스 별 상위 10 키워드 등장 횟수 카운트
+    def getKeywordCount(file_path) :
+        with open(file_path, encoding='utf-8') as file:
+            data = json.load(file)[1]['news']   # 수집 데이터에서 뉴스 데이터만 추출
+            keyword = dict()    # 키워드 카운트할 딕셔너리 변수
+            
+            for n in data :     # 뉴스 별로 반복
+                for k in n['top10_word'].keys() :   # 뉴스 데이터 속 상위 10개 단어 별로 반복
+                    # 키워드 카운트 변수에 개수 세기
+                    if k in keyword.keys() : keyword[k] += 1    
+                    else : keyword[k] = 1
+
+        return keyword  # 카운트 결과 반환
+    ```
+
+2. 앞서 카운트한 데이터를 통해 워드클라우드를 그리고, 결과를 저장하는 함수를 구현했다. (라이브러리 임포트 코드 생략)
+    ```
+    ## 딕셔너리 데이터를 받아 워드클라우드 생성
+    def wordcloudFromDict(data, news_office, out_file_path) :   # 데이터, 뉴스 명, 워드클라우드 저장할 파일 경로
+        wc = WordCloud(font_path = font_path,     # 폰트 경로 설정
+                    relative_scaling=0.2,         # 크기 조절
+                    background_color='white',     # 배경색
+                    ).generate_from_frequencies(data)   # 데이터 설정
+
+        plt.figure(figsize=(10,10))    # plot 크기 설정
+        plt.imshow(wc)                 # show할 wc 설정
+        plt.axis('off')                # axis 삭제
+
+        # plot title 설정
+        title = news_office + '_wordcloud'
+        plt.title(title)
+
+        plt.savefig(out_file_path + title + '.png') # plot 이미지 파일로 저장
+
+        return None</code></pre>
+    ```
+3. 실행 코드를 통해 아래와 같이 SBS 기사에 대한 워드클라우드와 동아일보 기사에 대한 워드클라우드를 추출하였다.<br><br>
+    SBS 워드클라우드
+    ![SBS 워드클라우드](./plot/SBS_wordcloud.png)
+    동아일보 워드클라우드
+    ![동아일보 워드클라우드](./plot/DongA_wordcloud.png)
+
+### 2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv에서 성폭력만 같이 가져와서(두가지 데이터 합치기) 여러 그래프 그리기(연도별 전자감독 대상자 중, 재범한 비율을 한 눈에 볼 수 있는 그런 그래프) -> 연도, 성폭력 전자발찌 착용자 수, 재범 수
+- 2019년 데이터는 제외

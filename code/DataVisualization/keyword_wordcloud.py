@@ -1,7 +1,7 @@
 # 필요 라이브러리 임포트
 import json 
 
-# 언론사(SBS, 동아일보) 별 뉴스 별 상위 10 키워드 등장 횟수 카운트
+## 언론사(SBS, 동아일보) 별 뉴스 별 상위 10 키워드 등장 횟수 카운트
 def getKeywordCount(file_path) :
     with open(file_path, encoding='utf-8') as file:
         data = json.load(file)[1]['news']   # 수집 데이터에서 뉴스 데이터만 추출
@@ -25,7 +25,7 @@ font_path = "C:/Windows/Fonts/malgun.ttf"
 font = font_manager.FontProperties(fname=font_path).get_name()
 rc('font', family=font)
 
-# 딕셔너리 데이터를 받아 워드클라우드 생성
+## 딕셔너리 데이터를 받아 워드클라우드 생성
 def wordcloudFromDict(data, news_office, out_file_path) :   # 데이터, 뉴스 명, 워드클라우드 저장할 파일 경로
     wc = WordCloud(font_path = font_path,     # 폰트 경로 설정
                 relative_scaling=0.2,         # 크기 조절

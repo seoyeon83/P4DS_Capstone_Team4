@@ -1,3 +1,5 @@
+## 워드클라우드
+
 # 상대경로 지정을 위한 코드
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))

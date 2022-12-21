@@ -109,17 +109,20 @@ index = np.arange(13) #그래프가 겹치지 않게 구현되도록 간격 설�
  ```
 
 2. 앞에서 전처리 된 데이터를 사용해 bar chart를 구현하였다.(라이브러리 임포트 코드 생략)
-
+ ```
 fig, ax = plt.subplots(figsize=(12, 6))  # 그래프의 사이즈 설정
 w = 0.25 # 막대 그래프의 넓이를 0.25로 설정
 
 b1 = plt.bar(index - w, df1['Population'], width = w,  color='red', label='population') #막대의 위치 지정 후 막대의 색깔, 라벨 지정 후 해당하는 값의 막대 형성(b2,b3 동일)
 b2 = plt.bar(index, df1['Recidivism'], width = w, color='blue', label='recidivism')
 b3 = plt.bar(index + w, df1['Sexual_violence'], width = w, color='green', label='sexual violence')
-
+ ```
+ 
 3. bar chart의 눈금을 형성하고 범례 지정 후 실행 코드(plt.show())를 사용하여 bar chart를 형성하였다.
+ ```
 plt.xticks(index, df1['Year']) # 눈금 설정
 plt.legend() # 그래프의 범례 지정
 plt.show() # 그래프 
+ ```
 
 

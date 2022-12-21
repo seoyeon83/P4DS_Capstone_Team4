@@ -52,7 +52,7 @@
 ## 실습 발전 과정
 ### 1. 워드클라우드
 크롤링한 데이터(SBS_data_3_.json / DongA_data_3_.json) 중, 뉴스 기사별 중요도 상위 10개 단어를 추출한 데이터를 활용하여 워드클라우드 제작을 진행하였다. 이에 관한 코드는 keyword_wordcloud.py 에 포함되어 있다.
-실행 방법: run > visualization_wordcloud.py
+- 실행 방법: run > visualization_wordcloud.py
 
 1. 기사별 중요도 상위 10개 데이터가 있는 json 데이터를 입력받아 뉴스 별 키워드를 카운트하여 딕셔너리 변수로 반환하는 함수를 구현했다. (라이브러리 임포트 코드 생략)
     - file_path: 입력할 json 데이터 상대경로
@@ -101,7 +101,7 @@
     ![동아일보 워드클라우드](./plot/DongA_wordcloud.png)
 
 ### 2. '성폭력 전자감독대상자 재범건수.csv'의 bar chart 그리기(성폭력 전자감독 대상자 중 다시 성범죄를 저지른 범죄자의 수 확인 가능)
-실행 방법: code > DataVisualization > RecidivismPlot.py 바로 실행, 혹은 run > RecidivismPlot_Run.py
+- 실행 방법: code > DataVisualization > RecidivismPlot.py 바로 실행, 혹은 run > RecidivismPlot_Run.py
 1. 폰트 깨지는 것을 방지하기 위한 코드를 작성하고, pandas를 사용해 '연도별 성폭력 전자감독대상자 재범건수.csv'파일을 불러온다.
 csv파일은 13 x 4 로 2008년~2020년(연도)까지의 전자감독 대상자 수(총인원), 전자감독 대상자 수 중 재범건수(전체재범건수), 재범 건 수 중 성폭력 재범 건수(성폭력재범건수)를 확인 할 수 있다.
 (라이브러리 임포트 코드 생략)

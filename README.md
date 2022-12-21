@@ -130,7 +130,7 @@ plt.savefig('../../plot/성폭력 전자감독대상자 재범 분포.png') # pl
 plt.show() #그래프 그리기
  ```
  성폭력 전자감독대상자 재범 분포
-![image](https://user-images.githubusercontent.com/117803754/208844404-c2de0b45-0bc9-47c5-95fa-46a10fda0feb.png)
+![재범 분포](./plot/성폭력 전자감독대상자 재범 분포 plot.png)
 
 
 

@@ -24,5 +24,5 @@ b3 = plt.bar(index + w, df1['성폭력재범건수'], width = w, color='green', 
 # x축 위치를 정 가운데로 조정하고, x축의 텍스트를 연도 정보와 매칭
 plt.xticks(index, df1['연도'])
 plt.legend()
-plt.savefig('../../plot/성폭력 전자감독대상자 재범 분포.png') # plot 이미지 파일로 저장
+plt.savefig('../../plot/성폭력 전자감독대상자 재범 분포 plot.png') # plot 이미지 파일로 저장
 plt.show()

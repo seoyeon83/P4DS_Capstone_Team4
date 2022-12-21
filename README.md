@@ -45,7 +45,7 @@
 1. 지난 캡스톤디자인I에서는 데이터에 대한 시각화를 엑셀을 활용하여 간단히 진행하였음.
 ![캡스톤디자인I 시각화(1)](./readmeSource/%EC%BA%A1%EC%8A%A4%ED%86%A4%EB%94%94%EC%9E%90%EC%9D%B8I%20%EC%8B%9C%EA%B0%81%ED%99%94(1).jpg)
 ![캡스톤디자인I 시각화(2)](./readmeSource/%EC%BA%A1%EC%8A%A4%ED%86%A4%EB%94%94%EC%9E%90%EC%9D%B8I%20%EC%8B%9C%EA%B0%81%ED%99%94(2).jpg)
-2. 파이썬을 이용한 데이터사이언스 수업에서 공부한 시각화 라이브러리를 이용하여 보다 발전되고, 퀄리티 높은 시각화 자료를 만들어 내고자 함.
+2. 파이썬을 이용한 데이터사이언스 수업에서 공부한 시각화 라이브러리를 이용하여 보다 발전되고, 퀄리티 높은 시각화 자료를 만들어 내고자 함. 
     1. 전처리까지만 진행했던 크롤링 데이터(SBS_data_3_.json/DongA_data_3_.json)를 활용해 등장 빈도가 높은 중요 키워드를 워드클라우드를 통해 시각화.
     2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv 두가지 데이터를 합쳐 여러가지 플롯 그리기
 
@@ -97,5 +97,28 @@
     동아일보 워드클라우드
     ![동아일보 워드클라우드](./plot/DongA_wordcloud.png)
 
-### 2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv에서 성폭력만 같이 가져와서(두가지 데이터 합치기) 여러 그래프 그리기(연도별 전자감독 대상자 중, 재범한 비율을 한 눈에 볼 수 있는 그런 그래프) -> 연도, 성폭력 전자발찌 착용자 수, 재범 수
-- 2019년 데이터는 제외
+### 2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv에서 성폭력만 같이 가져와서(두가지 데이터 합치기) bar chart 그리기(연도별 전자감독 대상자 중, 재범한 비율을 한 눈에 볼 수 있는 그런 그래프) -> 연도, 성폭력 전자발찌 착용자 수, 재범 수
+- 2020년 데이터는 제외 - > 2020년도의 경우 코로나로 인해 연도별 성범죄와 성폭력 전자감독대상자 재범률이 감소하였기 때문에 2020년도의 결과는 객관성을 해친다고 판단
+
+1. '연도별 성폭력 전자감독대상자 중 성폭력수.csv'파일을 pandas를 사용해 불러와 컬럼 이름을 새로 지정해준다. 또한 시각화를 위해 간격을 설정하는 코드를 구현하였다.(라이브러리 임포트 코드 생략)
+
+df1 = pd.read_csv("../../source/preprocessedData/연도별 성폭력 전자감독대상자 중 성폭력수.csv", encoding='utf-8') #csv파일 불러오기 및 한글 깨짐 방지를 위해 'utf-8' 사용하여 인코딩
+df1.columns = ['Index', 'Year', 'Population', 'Recidivism', 'Sexual_violence'] #칼럼명 설정
+df1.reset_index(inplace=True) # 새로운 칼럼명으로 대체
+index = np.arange(13) #그래프가 겹치지 않게 구현되도록 간격 설정
+
+2. 앞에서 전처리 된 데이터를 사용해 bar chart를 구현하였다.(라이브러리 임포트 코드 생략)
+
+fig, ax = plt.subplots(figsize=(12, 6))  # 그래프의 사이즈 설정
+w = 0.25 # 막대 그래프의 넓이를 0.25로 설정
+## 막대의 위치 지정 후 넓이 해당하는 인덱스의 값의 막대 생성 + 막대의 색깔과 라벨 지정
+b1 = plt.bar(index - w, df1['Population'], width = w,  color='red', label='population') 
+b2 = plt.bar(index, df1['Recidivism'], width = w, color='blue', label='recidivism')
+b3 = plt.bar(index + w, df1['Sexual_violence'], width = w, color='green', label='sexual violence')
+
+3. bar chart의 눈금을 형성하고 범례 지정 후 실행 코드(plt.show())를 사용하여 bar chart를 형성하였다.
+plt.xticks(index, df1['Year']) # 눈금 설정
+plt.legend() # 그래프의 범례 지정
+plt.show() # 그래프 
+
+

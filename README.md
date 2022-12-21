@@ -47,7 +47,7 @@
 ![캡스톤디자인I 시각화(2)](./readmeSource/%EC%BA%A1%EC%8A%A4%ED%86%A4%EB%94%94%EC%9E%90%EC%9D%B8I%20%EC%8B%9C%EA%B0%81%ED%99%94(2).jpg)
 2. 파이썬을 이용한 데이터사이언스 수업에서 공부한 시각화 라이브러리를 이용하여 보다 발전되고, 퀄리티 높은 시각화 자료를 만들어 내고자 함. 
     1. 전처리까지만 진행했던 크롤링 데이터(SBS_data_3_.json/DongA_data_3_.json)를 활용해 등장 빈도가 높은 중요 키워드를 워드클라우드를 통해 시각화.
-    2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv 두가지 데이터를 합쳐 여러가지 플롯 그리기
+    2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv 두가지 데이터를 합쳐 bar chart 그리기
 
 ## 실습 진행 과정
 ### 1. 워드클라우드
@@ -100,29 +100,36 @@
 ### 2. 연도별 성폭력 전자감독대상자 수.csv와 연도별 성폭력 전자감독대상자 중 재범건수(범죄유형별).csv에서 성폭력만 같이 가져와서(두가지 데이터 합치기) bar chart 그리기(연도별 전자감독 대상자 중, 재범한 비율을 한 눈에 볼 수 있는 그런 그래프) -> 연도, 성폭력 전자발찌 착용자 수, 재범 수
 - 2020년 데이터는 제외 - > 2020년도의 경우 코로나로 인해 연도별 성범죄와 성폭력 전자감독대상자 재범률이 감소하였기 때문에 2020년도의 결과는 객관성을 해친다고 판단
 
-1. '연도별 성폭력 전자감독대상자 중 성폭력수.csv'파일을 pandas를 사용해 불러와 컬럼 이름을 새로 지정해준다. 또한 시각화를 위해 간격을 설정하는 코드를 구현하였다.(라이브러리 임포트 코드 생략)
+1. 폰트 깨지는 것을 방지하기 위한 코드를 작성하고, pandas를 사용해 '연도별 성폭력 전자감독대상자 재범건수.csv'파일을 불러온다.(라이브러리 임포트 코드 생략)
  ```
-df1 = pd.read_csv("../../source/preprocessedData/연도별 성폭력 전자감독대상자 중 성폭력수.csv", encoding='utf-8') #csv파일 불러오기 및 한글 깨짐 방지를 위해 'utf-8' 사용하여 인코딩
-df1.columns = ['Index', 'Year', 'Population', 'Recidivism', 'Sexual_violence'] #칼럼명 설정
-df1.reset_index(inplace=True) # 새로운 칼럼명으로 대체
-index = np.arange(13) #그래프가 겹치지 않게 구현되도록 간격 설정
+font_path = "C:/Windows/Fonts/malgun.ttf"  # 폰트 깨짐 방지위한 폰트 경로 지정 및 설정
+font = font_manager.FontProperties(fname=font_path).get_name()
+rc('font', family=font)
+
+df1 = pd.read_csv("../../source/preprocessedData/연도별 성폭력 전자감독대상자 재범건수.csv", encoding='utf-8') #csv파일 불러오기, 한글 깨짐을 방지하기 위해 'utf-8'을 사용하여 인코딩
  ```
 
-2. 앞에서 전처리 된 데이터를 사용해 bar chart를 구현하였다.(라이브러리 임포트 코드 생략)
+2.bar chart 구현을 위한 그래프 사이즈, 막대 굵기, 위치를 설정하였다. 또한 plt 함수를 사용하여 막대의 위치, 해당 값, 막대 색깔, 라벨을 설정하여 bar chart를 그렸다. 막대는 0.25의 간격을 두고 그려진다.(라이브러리 임포트 코드 생략)
  ```
-fig, ax = plt.subplots(figsize=(12, 6))  # 그래프의 사이즈 설정
-w = 0.25 # 막대 그래프의 넓이를 0.25로 설정
+fig, ax = plt.subplots(figsize=(12, 6)) # 그래프 사이즈 설정
+w = 0.25 # 막대 넓이 설정
 
-b1 = plt.bar(index - w, df1['Population'], width = w,  color='red', label='population') #막대의 위치 지정 후 막대의 색깔, 라벨 지정 후 해당하는 값의 막대 형성(b2,b3 동일)
-b2 = plt.bar(index, df1['Recidivism'], width = w, color='blue', label='recidivism')
-b3 = plt.bar(index + w, df1['Sexual_violence'], width = w, color='green', label='sexual violence')
+
+index = np.arange(13) # 연도가 13개이므(2008~2020)로 0, 1 ... , 13 위치를 기준으로 삼음
+
+# 각 연도별로 3개 샵의 bar를 순서대로 나타내는 과정(b1, b2, b3 동일)
+b1 = plt.bar(index - w, df1['총인원'], width = w,  color='red', label='총인원') 
+b2 = plt.bar(index, df1['전체재범건수'], width = w, color='blue', label='전체재범건수')
+b3 = plt.bar(index + w, df1['성폭력재범건수'], width = w, color='green', label='성폭력재범건수')
+
  ```
  
-3. bar chart의 눈금을 형성하고 범례 지정 후 실행 코드(plt.show())를 사용하여 bar chart를 형성하였다.
+3. 실행 코드(RecidivismPlot_run.py)를 사용하여 bar chart의 눈금을 형성하고 범례 지정 후 bar chart를 형성하였다.
  ```
-plt.xticks(index, df1['Year']) # 눈금 설정
-plt.legend() # 그래프의 범례 지정
-plt.show() # 그래프 
+plt.xticks(index, df1['연도']) # 그래프의 눈금 설정
+plt.legend() # 그래프 범례 설정
+plt.savefig('../../plot/성폭력 전자감독대상자 재범 분포.png') # plot 이미지 파일로 저장
+plt.show() #그래프 그리기
  ```
 
 

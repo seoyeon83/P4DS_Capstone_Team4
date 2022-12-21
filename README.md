@@ -98,7 +98,8 @@
     ![동아일보 워드클라우드](./plot/DongA_wordcloud.png)
 
 ### 2. '성폭력 전자감독대상자 재범건수.csv'의 bar chart 그리기(성폭력 전자감독 대상자 중 다시 성범죄를 저지른 범죄자의 수 확인 가능)
-1. 폰트 깨지는 것을 방지하기 위한 코드를 작성하고, pandas를 사용해 '연도별 성폭력 전자감독대상자 재범건수.csv'파일을 불러온다.(라이브러리 임포트 코드 생략)
+1. 폰트 깨지는 것을 방지하기 위한 코드를 작성하고, pandas를 사용해 '연도별 성폭력 전자감독대상자 재범건수.csv'파일을 불러온다.
+(라이브러리 임포트 코드 생략)
  ```
 font_path = "C:/Windows/Fonts/malgun.ttf"  # 폰트 깨짐 방지위한 폰트 경로 지정 및 설정
 font = font_manager.FontProperties(fname=font_path).get_name()

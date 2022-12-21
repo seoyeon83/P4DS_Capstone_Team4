@@ -111,8 +111,8 @@ index = np.arange(13) #그래프가 겹치지 않게 구현되도록 간격 설�
 
 fig, ax = plt.subplots(figsize=(12, 6))  # 그래프의 사이즈 설정
 w = 0.25 # 막대 그래프의 넓이를 0.25로 설정
-# 막대의 위치 지정 후 넓이 해당하는 인덱스의 값의 막대 생성 + 막대의 색깔과 라벨 지정
-b1 = plt.bar(index - w, df1['Population'], width = w,  color='red', label='population') 
+
+b1 = plt.bar(index - w, df1['Population'], width = w,  color='red', label='population') #막대의 위치 지정 후 막대의 색깔, 라벨 지정 후 해당하는 값의 막대 형성(b2,b3 동일)
 b2 = plt.bar(index, df1['Recidivism'], width = w, color='blue', label='recidivism')
 b3 = plt.bar(index + w, df1['Sexual_violence'], width = w, color='green', label='sexual violence')
 
